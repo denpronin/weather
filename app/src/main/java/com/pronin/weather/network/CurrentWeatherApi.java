@@ -4,6 +4,8 @@ import com.pronin.weather.model.CurrentWeather;
 
 import java.util.Map;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;

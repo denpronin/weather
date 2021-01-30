@@ -3,6 +3,8 @@ package com.pronin.weather.model;
 import java.util.List;
 
 public class CurrentWeather {
+    public static final double PRESSURE_COEFFICIENT = 0.75006375541921;
+    public static final int DT_MULTIPLIER = 1000;
     private double lat;
     private double lon;
     private String timezone;
