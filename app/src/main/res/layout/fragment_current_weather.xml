@@ -6,7 +6,7 @@
     android:layout_height="370dp"
     android:elevation="8dp"
     android:background="@drawable/bluegradient_background"
-    tools:context=".CurrentWeatherFragment">
+    tools:context=".ui.CurrentWeatherFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -54,13 +54,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:textColor="@color/white"
-            android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
+            android:textColor="@color/white"
             android:textSize="80sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cur_icon"
-            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,7 +66,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="@string/weather_icon"
             android:scaleType="centerCrop"
