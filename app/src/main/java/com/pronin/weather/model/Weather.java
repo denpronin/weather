@@ -31,10 +31,10 @@ public class Weather {
     }
 
     public String getIcon() {
-        return icon;
+        return "https://openweathermap.org/img/wn/" + icon + "@4x.png";
     }
 
     public void setIcon(String icon) {
-        this.icon = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+        this.icon = icon;
     }
 }

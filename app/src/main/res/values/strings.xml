@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Weather</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="errWeather">Failed to update weather data. Check internet connection</string>
+    <string name="no_location">Failed to get location. Shows the weather in Bar, Montenegro</string>
+    <string name="no_permissions_msg">Application requires all requested permissions</string>
 </resources>
