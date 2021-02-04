@@ -13,5 +13,6 @@ public interface MainActivityContract {
         void loadWeather(String apikey, Location location);
         void attachView(MainActivityContract.View view);
         void detachView();
+        void onDestroy();
     }
 }

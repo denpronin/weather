@@ -5,54 +5,40 @@ import android.util.Log;
 import com.pronin.weather.model.CurrentWeather;
 import com.pronin.weather.model.Location;
 import com.pronin.weather.network.NetworkWorker;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MainActivityPresenter implements MainActivityContract.Presenter{
     private final String TAG = "MainActivityPresenter";
     private MainActivityContract.View view;
-
-//    public MainActivityPresenter(MainActivityContract.View view) {
-//        this.view = view;
-//    }
+    private Disposable disposableObserver;
 
     @Override
     public void loadWeather(String apikey, Location location) {
-//        if (view == null)
-//            Log.e(TAG,"View is null!");
-//        else {
-//            Observable<CurrentWeather> cw = NetworkWorker.getCurrentWeather(apikey, location);
-//            cw.subscribeOn(Schedulers.newThread())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(currentWeather -> {
-//                        view.showWeather(currentWeather);
-//                    }, throwable -> {
-//                        view.showError();
-//                        Log.e(TAG,"Rx error!");});
-//        }
-        NetworkWorker.getCurrentWeather(apikey, location, new NetworkWorker.GetCurrentWeatherListener() {
-            @Override
-            public void onGotCurrentWeather(CurrentWeather weather) {
-                if (view == null)
-                    Log.e(TAG,"View is null!");
-                else
-                    view.showWeather(weather);
-            }
+        Observable<CurrentWeather> cw = NetworkWorker.getCurrentWeather(apikey, location);
+        disposableObserver = cw.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<CurrentWeather>() {
+                    @Override
+                    public void onNext(@NonNull CurrentWeather weather) {
+                        view.showWeather(weather);
+                    }
 
-            @Override
-            public void onError() {
-                view.showError();
-            }
-        });
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG,"Error on update weather");
+                        view.showError();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG,"Completed");
+                    }
+                });
     }
 
     @Override
@@ -63,5 +49,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter{
     @Override
     public void detachView() {
         view = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        disposableObserver.dispose();
     }
 }
